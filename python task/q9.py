@@ -6,26 +6,24 @@ detections = [
     {"object": "chair", "confidence": 70, "mode": "infrared", "distance": 2.8}
 ]
 
-valid = list(filter(
-    lambda x: x["object"] == "human"
-    and x["mode"] == "camera"
-    and x["confidence"] > 85,
-    detections
-))
+valid = list(filter( lambda x: x["object"]== "human" 
+                        and x["mode"]=="camera"
+                        and x["confidence"]>85, 
+                        detections))
+
+print("valid human detections are: \n",valid, end="\n")
+print("\n")
 
 distances = list(map(lambda x: x["distance"], valid))
-
-print("Valid Human Detections:")
-print(valid)
-
-print("\nDistances:")
 print(distances)
+print("\n")
 
-def safety_check(distance):
-    if distance < 1:
-        print("ALERT: Human very close!")
+def system(distance):
+    if distance < 1.0:
+        print("Alert: Human detected within 1 meter!")
     else:
         print("Human detected at safe distance")
 
-for d in distances:
-    safety_check(d)
+
+for i in range(len(distances)):
+    system(distances[i])
